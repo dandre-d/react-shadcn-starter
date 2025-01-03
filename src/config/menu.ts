@@ -20,22 +20,61 @@ export const mainMenu: NavItemWithChildren[] = [
         to: '',
     },
     {
-        title: 'Dropdown',
+        title: 'Add Orders',
+        to: 'Orders',
+    },
+    {
+        title: 'Admin Manage',
         items: [
             {
-                title: 'Sample',
-                to: '/sample',
+                title: 'Office',
+                to: 'Actions',
             },
             {
-                title: 'Sample Dua',
-                to: '/#',
+                title: 'Vendor',
+                to: 'Manage/Vendor',
+            },
+            {
+                title: 'User',
+                to: 'Manage/Users',
             },
         ]
     },
     {
-        title: 'Empty',
-        to: 'empty',
+        title: 'Admin Menu',
+        items: [
+            {
+                title: 'Upload',
+                to: 'Menu',
+            },
+            {
+                title: 'Edit',
+                to: 'Menu',
+            },
+            {
+                title: 'Items',
+                to: 'Manage',
+            },
+        ]
     },
+    {
+        title: 'User',
+        items: [
+            {
+                title: 'Orders',
+                to: 'Orders',
+            },
+            {
+                title: 'Edit',
+                to: 'Menu',
+            },
+            {
+                title: 'Items',
+                to: 'Manage',
+            },
+        ]
+    },
+
 ]
 
 export const sideMenu: NavItemWithChildren[] = []

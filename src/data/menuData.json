@@ -1,0 +1,53 @@
+{
+    "menuItems": [
+        {
+            "day": "Monday",
+            "date": "14th October",
+            "meals": [
+              "Bone in Chicken and Butternut Casserole",
+              "Potato and Brinjal Curry with Rice and Sambals",
+              "Chicken and Sweet Potato Bougee Bowl with Bulgar Wheat",
+              "Cheese, Tomato and Basil Pesto Health Roll"
+            ]
+          },
+          {
+            "day": "Tuesday",
+            "date": "15th October",
+            "meals": [
+              "Southern Fried Chicken Strips with Mash, Gravy and Peas",
+              "Classic Mac and Cheese with Coleslaw",
+              "Chicken and Jalapeno Loaded Jacket Sweet Potato served with Salad",
+              "Chicken and Coleslaw Wrap"
+            ]
+          },
+          {
+            "day": "Wednesday",
+            "date": "16th October",
+            "meals": [
+              "Grilled Hake with Skin on Wedges and Coleslaw",
+              "Chickpea and Mushroom Stroganoff with Mash and Salad",
+              "Sweet Chilli Chicken and Feta Tramezzini"
+            ]
+          },
+          {
+            "day": "Thursday",
+            "date": "17th October",
+            "meals": [
+              "Beef Curry with Rice and Sambals",
+              "Sweet Potato and Bean Baked Enchilada topped with Bechamel and Cheese served with Tomato Salsa",
+              "Beef Stir Fry with Brown Rice",
+              "Beef Stir Fry Wrap"
+            ]
+          },
+          {
+            "day": "Friday",
+            "date": "18th October",
+            "meals": [
+              "Beef Napolitano Ragout served over Spaghetti with a Cocktail Garlic Roll",
+              "Vegetarian Wors Roll with grilled onions and Roasted Potato Wedges",
+              "Beef Bolognaise and Cheese Health Roll",
+              "Chicken Chilli Con Carne with Barley"
+            ]
+          }
+    ]
+  }
