@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useReactTable, ColumnDef, SortingState, ColumnFiltersState, getCoreRowModel, getSortedRowModel, getFilteredRowModel } from "@tanstack/react-table";
 import { Input } from "../ui/input";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "../ui/button";
 // Define the MenuItemCard props
 interface MenuItemCardProps {
@@ -76,27 +76,29 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ columns, data }) => 
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row, rowIndex) => (
             
-            <Card key={row.id} className="">
-       
-              <CardHeader className="h-32">
+            <Card key={row.id} className="flex flex-row-reverse  h-20">
+  
+              <CardHeader className="w-64 p-1 pt-2">
                 <CardTitle className={applyGreenText(row.original.name || "")}>
                   {row.original.name || "No Name Provided"} 
                 
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="overflow-hidden p-0 ">
                   
                   {row.original.description || "No Description Provided"}
                 </CardDescription>
                 
               </CardHeader>
-              <CardContent className="flex-wrap">
+              <CardContent className="flex-none w-24  p-2 pt-2">
                 <img
                   src={row.original.image_url}
                   alt={row.original.name}
-                  className="w-64 h-64 object-cover rounded-md mt-auto"
+                  className="w-32 h-16 object-cover rounded-md mt-auto"
+
                 />
               
               </CardContent>
+            
               {/* <Button>Test</Button> */}
             </Card>
           ))

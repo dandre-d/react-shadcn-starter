@@ -47,15 +47,19 @@ export default function Orders() {
 
   return (
     <>
-      <PageHeader>
-        <PageHeaderHeading>Manage Orders</PageHeaderHeading>
-      </PageHeader>
-   
-      {/* Date Range Picker */}
-      <div className="mb-4">
-        <DatePickerWithRange onChange={handleDateRangeChange} />
+
+      <div className="sticky top-[2rem] z-0  p-0 w-full border-b supports-backdrop-blur:bg-background/60  bg-background/90 backdrop-blur">
+     
+        <PageHeader>
+          <PageHeaderHeading>Manage Orders</PageHeaderHeading>
+        </PageHeader>
+
+        {/* Date Range Picker */}
+        <div className="mb-4">
+          <DatePickerWithRange onChange={handleDateRangeChange} />
+        </div>
       </div>
-   
+
       <div>
         {selectedDateRange ? (
           <p>

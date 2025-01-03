@@ -10,7 +10,7 @@ import {
 import { getActiveMenuItems } from "../../api/services/menuItemService";
 import { MenuItemCard } from "../User/MenuItemCard";
 import { Button } from "../ui/button";
-import { MenuItem, Menus, Vendor } from "../../models/MenuItem";
+import { MenuItem } from "../../models/MenuItem";
 import { formToJSON } from "axios";
 
 interface MenuItemTableProps {
@@ -31,15 +31,6 @@ export const MenuItemTable: React.FC<MenuItemTableProps> = ({ startDate, endDate
         const items = await getActiveMenuItems(startDate, endDate); // Pass date filters
         // console.log("Fetched Items:", items);
         setMenuItems(items);
-        items.forEach((item: { Menus: any; Category: any }) => {
-        try {
-          console.log("Menuss:", item.Menus[0].Vendor.name);
-          // console.log("Category:", item.Category.category);
-        } catch (err) {
-          console.log(err)
-        }
-        });
-       
       } catch (err) {
         setError("Failed to fetch menu items.");
       }
@@ -49,8 +40,8 @@ export const MenuItemTable: React.FC<MenuItemTableProps> = ({ startDate, endDate
 
   // Filtered menu items
   const filteredMenuItems = menuItems.filter((item) => {
-    const matchesVendor = vendorFilter === "" || item.Menus[0].Vendor.name === vendorFilter;
-    const matchesCategory = categoryFilter === "" || item.Category?.category === categoryFilter;
+    const matchesVendor = vendorFilter === "" || item.menus_vendor_name === vendorFilter;
+    const matchesCategory = categoryFilter === "" || item.category === categoryFilter;
     return matchesVendor && matchesCategory;
   });
 
@@ -75,50 +66,70 @@ export const MenuItemTable: React.FC<MenuItemTableProps> = ({ startDate, endDate
 
       {/* Filters */}
       <div className="filters flex gap-4">
-        {/* Vendor Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger className="btn">
-            <Button>{vendorFilter || "Vendor"}</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Select Vendor</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {[...new Set(menuItems.map((item) => item.Menus[0].Vendor?.name))].map((vendor) => (
+      {/* Vendor Dropdown */}
+      <DropdownMenu>
+        <DropdownMenuTrigger className="btn">
+          <Button>{vendorFilter || "Vendor"}</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Select Vendor</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {[...new Set(menuItems.map((item) => item.menus_vendor_name))]
+            .sort((a, b) => a.localeCompare(b)) // Sort alphabetically
+            .map((vendor) => (
               <DropdownMenuItem key={vendor} onClick={() => handleVendorChange(vendor)}>
                 {vendor}
               </DropdownMenuItem>
             ))}
-            <DropdownMenuItem onClick={() => handleVendorChange("")}>Clear</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          <DropdownMenuItem onClick={() => handleVendorChange("")}>Clear</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
-        {/* Category Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button>{categoryFilter || "Category"}</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Select Category</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {[...new Set(menuItems.map((item) => item.Category.category))].map((category) => (
-              <DropdownMenuItem key={category} onClick={() => handleCategoryChange(category)}>
-                {category}
-              </DropdownMenuItem>
-            ))}
-              <DropdownMenuItem onClick={() => handleCategoryChange("")}>Clear</DropdownMenuItem>
-         
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+{/* Category Dropdown */}
+<DropdownMenu>
+  <DropdownMenuTrigger>
+    <Button>{categoryFilter || "Category"}</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>Select Category</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    {[...new Set(
+      menuItems
+        .filter((item) => vendorFilter === "" || item.menus_vendor_name === vendorFilter)
+        .map((item) => item.category)
+    )]
+      .sort((a, b) => a.localeCompare(b)) // Sort alphabetically
+      .map((category) => {
+        const count = menuItems.filter(
+          (item) =>
+            item.category === category &&
+            (vendorFilter === "" || item.menus_vendor_name === vendorFilter)
+        ).length; // Count items for the category
+        return (
+          <DropdownMenuItem key={category} onClick={() => handleCategoryChange(category)}>
+            {category} <span className="text-gray-500">&nbsp; ({count})</span>
+          </DropdownMenuItem>
+        );
+      })}
+    <DropdownMenuItem onClick={() => handleCategoryChange("")}>Clear</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+
+
       </div>
       
  
-
-      {/* Table */}
-      {filteredMenuItems.length > 0 ? (
-        <MenuItemCard columns={columns} data={filteredMenuItems} />
-      ) : (
-        <p>No menu items found for the selected filters.</p>
-      )}
+{/* Table */}
+{vendorFilter && categoryFilter ? (
+  filteredMenuItems.length > 0 ? (
+    <MenuItemCard columns={columns} data={filteredMenuItems} />
+  ) : (
+    <p>No menu items found for the selected filters.</p>
+  )
+) : (
+  <p>Please select a vendor and category to view menu items.</p>
+)}
     </div>
   );
 };
