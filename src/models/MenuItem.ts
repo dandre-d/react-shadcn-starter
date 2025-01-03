@@ -21,7 +21,7 @@ interface Category {
     image_url: string | undefined,
     availability: boolean ,
     is_active: boolean  ,
-    Menus: Menus; // Nested Menu object
+    Menus: Menus[]; // Nested Menu object
     Category: Category; // Nested Category object
     
     }

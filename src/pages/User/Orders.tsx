@@ -1,11 +1,10 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PageHeader, PageHeaderHeading } from "@/components/page-header";
 import MenuItem from "@/components/User/MenuItemTable";
 import { Card, CardDescription, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { DatePickerWithRange } from "@/components/ui/DateRangePicker";
 import { DateRange } from "react-day-picker";
-import { addDays, startOfWeek } from "date-fns";
-
+import { addDays, startOfWeek, format } from "date-fns";
 
 // Function to get the default workweek (Monday to Friday)
 const getDefaultWorkWeek = (): DateRange => {
@@ -14,7 +13,6 @@ const getDefaultWorkWeek = (): DateRange => {
   const friday = addDays(monday, 4);
   return { from: monday, to: friday };
 };
-
 
 const getDaysInRange = (startDate: Date, endDate: Date) => {
   const days = [];
@@ -26,8 +24,6 @@ const getDaysInRange = (startDate: Date, endDate: Date) => {
   }
   return days;
 };
-
-
 
 export default function Orders() {
   // Initialize state with the default workweek
@@ -48,10 +44,9 @@ export default function Orders() {
     setSelectedDateRange(dateRange);
     console.log("Selected Date Range:", dateRange);
   };
+
   return (
     <>
-
-    
       <PageHeader>
         <PageHeaderHeading>Manage Orders</PageHeaderHeading>
       </PageHeader>
@@ -62,7 +57,6 @@ export default function Orders() {
       </div>
    
       <div>
-        {/* <h2>Selected Date Range:</h2> */}
         {selectedDateRange ? (
           <p>
             {/* From: {selectedDateRange.from?.toLocaleDateString()} - To:{" "}
@@ -76,23 +70,22 @@ export default function Orders() {
       {/* Loop through the selected days and render cards */}
       {daysInRange.length > 0 ? (
         daysInRange.map((day, index) => {
-          // const dayName = day.toLocaleString("en-US", { weekday: "long" }); // Get the day of the week
+          // Format the date as 'yyyy-MM-dd' for each day
+          const formattedDate = format(day, 'yyyy-MM-dd');  // Format to '2023-12-31'
           const date = day.toDateString();
           return (
             <div key={index}>
-               <br/>
-             <Card >
-              <CardHeader>
-                <CardTitle>{date} </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <MenuItem />
-              </CardContent>
-            </Card>
-           
+              <br/>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{date}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {/* Pass the formatted date as startDate and endDate */}
+                  <MenuItem startDate={formattedDate} endDate={formattedDate} />
+                </CardContent>
+              </Card>
             </div>
-        
-          
           );
         })
       ) : (

@@ -49,7 +49,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ columns, data }) => 
 
   // Function to apply conditional formatting for "V"
   const applyGreenText = (text: string) => {
-    console.log(`Checking text: ${text}`);  // Debugging line
+    // console.log(`Checking text: ${text}`);  // Debugging line
     if (text.includes("(V)")) {
       return "text-green-500"; // Tailwind class for green text
     }
@@ -97,7 +97,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ columns, data }) => 
                 />
               
               </CardContent>
-              <Button>Test</Button>
+              {/* <Button>Test</Button> */}
             </Card>
           ))
         ) : (
