@@ -11,7 +11,7 @@ import {
 import { getMenuItems } from "../../api/services/menuItemService";
 import { MenuItemCard } from "../User/MenuItemCard";
 import { Button } from "../ui/button";
-import { MenuItem } from "../../models/MenuItem";
+import { MenuItem, Menus, Vendor } from "../../models/MenuItem";
 
 
 export const MenuItemTable = () => {
@@ -25,6 +25,10 @@ export const MenuItemTable = () => {
     const fetchMenuItems = async () => {
       try {
         const items = await getMenuItems();
+        items.forEach((item: { Menus: Menus; Category: any; }) => {
+          console.log('Menus:', item.Menus.Vendor.name);
+          console.log('Category:', item.Category.category);
+        });
         setMenuItems(items);
       } catch (err) {
         setError("Failed to fetch menu items.");
@@ -37,7 +41,7 @@ export const MenuItemTable = () => {
 
 // Updated Filtering Logic
 const filteredMenuItems = menuItems.filter((item) => {
-  const matchesVendor = vendorFilter === "" || item.Menu?.Vendor?.name === vendorFilter;
+  const matchesVendor = vendorFilter === "" || item.Menus?.Vendor?.name === vendorFilter;
   const matchesCategory = categoryFilter === "" || item.Category?.category === categoryFilter;
   return matchesVendor && matchesCategory;
 });
@@ -80,7 +84,7 @@ const filteredMenuItems = menuItems.filter((item) => {
             <DropdownMenuLabel>Select Vendor</DropdownMenuLabel>
           
             <DropdownMenuSeparator />
-            {[...new Set(menuItems.map((item) => item.Menu.Vendor.name))].map((vendor) => (
+            {[...new Set(menuItems.map((item) => item.Menus?.Vendor?.name))].map((vendor) => (
               <DropdownMenuItem key={vendor} onClick={() => handleVendorChange(vendor)}>
                 {vendor}
               </DropdownMenuItem>
