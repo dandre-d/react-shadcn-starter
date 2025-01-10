@@ -24,39 +24,32 @@ export const mainMenu: NavItemWithChildren[] = [
         to: 'Orders',
     },
     {
-        title: 'Admin Manage',
-        items: [
-            {
-                title: 'Office',
-                to: 'Actions',
-            },
-            {
-                title: 'Vendor',
-                to: 'Manage/Vendor',
-            },
-            {
-                title: 'User',
-                to: 'Manage/Users',
-            },
-        ]
+        title: 'Order Calendar',
+        to: 'OrderCalendar',
     },
     {
-        title: 'Admin Menu',
+        title: 'Manage',
+        to: 'Manage',
+    },
+    {
+        title: 'Users',
+        to: 'Users',
+    },
+    {
+        title: 'Admin Manage',
         items: [
+   
             {
-                title: 'Upload',
-                to: 'Menu',
+                title: 'Users',
+                to: 'Users',
             },
             {
-                title: 'Edit',
-                to: 'Menu',
-            },
-            {
-                title: 'Items',
+                title: 'Manage',
                 to: 'Manage',
             },
         ]
     },
+  
     {
         title: 'User',
         items: [

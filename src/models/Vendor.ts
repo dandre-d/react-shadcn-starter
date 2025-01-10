@@ -1,7 +1,8 @@
 export interface Vendor {
-  vendor_id: string;
-  name: string;
-  contact_email: string;
-  logo_uri: string;
+  id?: number;
+  name?: string;
+  contact_email?: string;
+  logo_uri?: string;
+  delivery_time?: string;
 
 }

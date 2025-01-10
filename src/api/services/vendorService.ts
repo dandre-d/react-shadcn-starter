@@ -13,7 +13,15 @@ export const getVendors = async () => {
     throw error;
   }
 };
-
+export const getVendor = async (id: number) => {
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching vendor by ID:", error);
+    throw error;
+  }
+};
 // Create a new Vendor via API
 export const createVendor = async (VendorData: Vendor) => {
   try {
@@ -21,6 +29,28 @@ export const createVendor = async (VendorData: Vendor) => {
     return response.data;
   } catch (error) {
     console.error("Error creating Vendor:", error);
+    throw error;
+  }
+};
+
+// Delete a vendor by ID via API
+export const deleteVendor = async (id: number) => {
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`);
+    return response.status === 204; // Returns true if deletion was successful
+  } catch (error) {
+    console.error("Error deleting vendor:", error);
+    throw error;
+  }
+};
+
+// Update a menu by ID
+export const updateVendor = async (id: number, vendorData: Vendor) => {
+  try {
+    const response = await axios.put(`${API_URL}/${id}`, vendorData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating vendor:", error);
     throw error;
   }
 };

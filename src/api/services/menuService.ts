@@ -13,7 +13,15 @@ export const getMenus = async () => {
     throw error;
   }
 };
-
+export const getMenu = async (id: number) => {
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching menu by ID:", error);
+    throw error;
+  }
+};
 // Create a new Menu via API
 export const createMenu = async (MenuData: Menu) => {
   try {
@@ -21,6 +29,27 @@ export const createMenu = async (MenuData: Menu) => {
     return response.data;
   } catch (error) {
     console.error("Error creating Menu:", error);
+    throw error;
+  }
+};
+
+export const deleteMenu = async (id: number) => {
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`);
+    return response.status === 204; // Returns true if deletion was successful
+  } catch (error) {
+    console.error("Error deleting Menu:", error);
+    throw error;
+  }
+};
+
+// Update a menu by ID
+export const updateMenu = async (id: number, menuData: Menu) => {
+  try {
+    const response = await axios.put(`${API_URL}/${id}`, menuData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating Menu:", error);
     throw error;
   }
 };

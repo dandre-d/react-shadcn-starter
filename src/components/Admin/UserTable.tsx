@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getUsers } from "../../api/services/userService";
 import { Button } from "../ui/button";
 import { TableComponent } from "../TableComponent"; // Import the reusable table component
+import { UserTableComponent } from "../user-table";
 // import { Notification } from "./ui/notification";  // Optional for notifications
 
 export const UserTable = () => {
@@ -21,6 +22,10 @@ export const UserTable = () => {
     fetchUsers();
   }, []);
   const columns = [
+    {
+      header: "ID",
+      accessorKey: "id",
+    },
     {
       header: "Alias",
       accessorKey: "alias",
@@ -50,8 +55,7 @@ export const UserTable = () => {
       {error && <div className="error">{error}</div>}
 
       {/* You can still render your table component */}
-      <TableComponent columns={columns} data={users} />
-
+      <TableComponent columns={columns} data={users} page="User"/>
 
     </div>
   );

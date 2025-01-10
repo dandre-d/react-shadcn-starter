@@ -13,6 +13,15 @@ export const getMenuItems = async () => {
     throw error;
   }
 };
+export const getMenuItem = async (id: number) => {
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching item by ID:", error);
+    throw error;
+  }
+};
 
 // Get active MenuItems from the API with optional date parameters
 export const getActiveMenuItems = async (start_date?: string, end_date?: string) => {
@@ -41,6 +50,26 @@ export const createMenuItem = async (MenuItemData: MenuItem) => {
     return response.data;
   } catch (error) {
     console.error("Error creating MenuItem:", error);
+    throw error;
+  }
+};
+
+export const deleteMenuItem = async (id: number) => {
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`);
+    return response.status === 204; // Returns true if deletion was successful
+  } catch (error) {
+    console.error("Error deleting Menu Item:", error);
+    throw error;
+  }
+};
+// Update a user by ID via API
+export const updateMenuItem = async (id: number, menuItemDate : MenuItem ) => {
+  try {
+    const response = await axios.put(`${API_URL}/${id}`, menuItemDate);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating Menu Item:", error);
     throw error;
   }
 };

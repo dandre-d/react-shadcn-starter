@@ -3,6 +3,8 @@ import { useReactTable, ColumnDef, SortingState, ColumnFiltersState, getCoreRowM
 import { Input } from "../ui/input";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "../ui/button";
+
+
 // Define the MenuItemCard props
 interface MenuItemCardProps {
   columns: ColumnDef<any>[]; // Array of column definitions
@@ -58,7 +60,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ columns, data }) => 
 
 
   return (
-    <div className="w-full">
+    <div className="">
       {/* Search filter */}
       <div className="flex items-center py-4">
         <Input
@@ -70,37 +72,52 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ columns, data }) => 
       </div>
 
       {/* Cards in Columns */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3
-       lg:grid-cols-4 gap-4"> {/* Adjust grid-cols-* to set the number of columns */}
+      <div className="flex gap-3 place-content-between flex-row flex-wrap "> {/* Adjust grid-cols-* to set the number of columns */}
        
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row, rowIndex) => (
-            
-            <Card key={row.id} className="flex flex-row-reverse  h-20">
-  
-              <CardHeader className="w-64 p-1 pt-2">
-                <CardTitle className={applyGreenText(row.original.name || "")}>
-                  {row.original.name || "No Name Provided"} 
-                
-                </CardTitle>
-                <CardDescription className="overflow-hidden p-0 ">
-                  
-                  {row.original.description || "No Description Provided"}
-                </CardDescription>
-                
-              </CardHeader>
-              <CardContent className="flex-none w-24  p-2 pt-2">
-                <img
-                  src={row.original.image_url}
-                  alt={row.original.name}
-                  className="w-32 h-16 object-cover rounded-md mt-auto"
+            <Card
+            onClick={() =>console.log('add')}
+            key={row.id}
+            className=" h-32 md:h-40 lg:h-32 overflow-hidden  rounded-lg cursor-pointer shadow-md
+            hover:rotate-1 hover:shadow-lg transition-transform duration-500 hover:z-40 
+             lg:hover:scale-115 transform group border-ring 
+             w-72"
+          >
+            {/* Image Section with Overlay */}
+            <div className="relative w-full h-full">
+              <img
+                src={row.original.image_url}
+                alt={row.original.name}
+                className="w-full h-full object-cover"
+              />
+              {/* Subtle Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent transition-opacity duration-500"></div>
+            </div>
+          
+            {/* Content Section */}
+            <div className="absolute left-4 right-4 bottom-4 z-10">
+              {/* Title */}
+              <CardTitle
+                className={` text-xs font-bold text-white ${
+                  applyGreenText(row.original.name || "")
+                } transition-transform duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100`}
+              >
+                {row.original.name || "No Name Provided"}
+              </CardTitle>
+          
+              {/* Description */}
+              <CardDescription
+                className=" text-xs text-gray-200 max overflow-hidden line-clamp-2 transition-all duration-500 ease-in-out group-hover:max-h-[10rem] group-hover:line-clamp-none group-hover:mt-2"
+              >
+                {row.original.description || "No Description Provided"}
+              </CardDescription>
+            </div>
+          </Card>
+          
+          
 
-                />
-              
-              </CardContent>
-            
-              {/* <Button>Test</Button> */}
-            </Card>
+
           ))
         ) : (
           <Card>

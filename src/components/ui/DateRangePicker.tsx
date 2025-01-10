@@ -1,7 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { addDays, format, startOfWeek, endOfWeek } from "date-fns";
+import {
+  addDays,
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  addMonths,
+} from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 
@@ -13,11 +20,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 interface DatePickerWithRangeProps {
   className?: string;
   onChange: (dateRange: DateRange | undefined) => void;
+  defaultValue?: string;
 }
 
 export function DatePickerWithRange({
   className,
   onChange, // Accept the onChange prop
+  defaultValue,
 }: DatePickerWithRangeProps) {
   // Calculate the start (Monday) and end (Friday) of the current week
   const getDefaultWorkWeek = () => {
@@ -26,9 +35,20 @@ export function DatePickerWithRange({
     const friday = addDays(monday, 4); // Friday is 4 days after Monday
     return { from: monday, to: friday };
   };
+  const getDefaultMonth = () => {
+    const today = new Date();
+    const start = startOfMonth(today); // Week starts on Monday
+    const end = addDays(addMonths(start, 1), -1); // Friday is 4 days after Monday
+    return { from: start, to: end };
+  };
+  const getDefault = () => {
+    const values =
+      defaultValue === "w" ? getDefaultWorkWeek() : getDefaultMonth();
+    return values;
+  };
 
   // Set the default range to the current workweek
-  const [date, setDate] = React.useState<DateRange | undefined>(getDefaultWorkWeek());
+  const [date, setDate] = React.useState<DateRange | undefined>(getDefault());
 
   // Handle date selection and pass it to the onChange prop
   const handleSelect = (selectedDate: DateRange | undefined) => {

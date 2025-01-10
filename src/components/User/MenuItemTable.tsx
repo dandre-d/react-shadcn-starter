@@ -60,12 +60,12 @@ export const MenuItemTable: React.FC<MenuItemTableProps> = ({ startDate, endDate
   ];
 
   return (
-    <div>
-      <h1>Menu Items</h1>
-      {error && <div className="error">{error}</div>}
+    <div className=" ml-3  ">
+      {/* <h1>Menu Items</h1>
+      {error && <div className="error">{error}</div>} */}
 
       {/* Filters */}
-      <div className="filters flex gap-4">
+      <div className="filters flex gap-4   ">
       {/* Vendor Dropdown */}
       <DropdownMenu>
         <DropdownMenuTrigger className="btn">
@@ -75,7 +75,7 @@ export const MenuItemTable: React.FC<MenuItemTableProps> = ({ startDate, endDate
           <DropdownMenuLabel>Select Vendor</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {[...new Set(menuItems.map((item) => item.menus_vendor_name))]
-            .sort((a, b) => a.localeCompare(b)) // Sort alphabetically
+            .sort((a, b) => (a || "").localeCompare(b || "")) // Safeguard against null/undefined
             .map((vendor) => (
               <DropdownMenuItem key={vendor} onClick={() => handleVendorChange(vendor)}>
                 {vendor}
@@ -95,23 +95,23 @@ export const MenuItemTable: React.FC<MenuItemTableProps> = ({ startDate, endDate
     <DropdownMenuLabel>Select Category</DropdownMenuLabel>
     <DropdownMenuSeparator />
     {[...new Set(
-      menuItems
-        .filter((item) => vendorFilter === "" || item.menus_vendor_name === vendorFilter)
-        .map((item) => item.category)
-    )]
-      .sort((a, b) => a.localeCompare(b)) // Sort alphabetically
-      .map((category) => {
-        const count = menuItems.filter(
-          (item) =>
-            item.category === category &&
-            (vendorFilter === "" || item.menus_vendor_name === vendorFilter)
-        ).length; // Count items for the category
-        return (
-          <DropdownMenuItem key={category} onClick={() => handleCategoryChange(category)}>
-            {category} <span className="text-gray-500">&nbsp; ({count})</span>
-          </DropdownMenuItem>
-        );
-      })}
+  menuItems
+    .filter((item) => vendorFilter === "" || item.menus_vendor_name === vendorFilter)
+    .map((item) => item.category)
+)]
+  .sort((a, b) => (a || "").localeCompare(b || "")) // Safeguard against null/undefined
+  .map((category) => {
+    const count = menuItems.filter(
+      (item) =>
+        item.category === category &&
+        (vendorFilter === "" || item.menus_vendor_name === vendorFilter)
+    ).length; // Count items for the category
+    return (
+      <DropdownMenuItem key={category} onClick={() => handleCategoryChange(category)}>
+        {category} <span className="text-gray-500">&nbsp; ({count})</span>
+      </DropdownMenuItem>
+    );
+  })}
     <DropdownMenuItem onClick={() => handleCategoryChange("")}>Clear</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
